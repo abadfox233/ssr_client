@@ -36,3 +36,16 @@ docker pull abadfox/ssr_client:0.1
 ```shell script
  docker run -d -v /root/config:/config -p 1080:1080 --name="ssr" abadfox/ssr_client:0.1
 ```
+## Socket Conver To Http
+
+```dockerfile
+FROM shinobit/privoxy
+RUN echo -e "forward-socks5t   /   ssr:1080 . " >> /etc/privoxy/config
+EXPOSE 8118
+CMD ["/usr/sbin/privoxy", "--no-daemon", "/etc/privoxy/config"]
+```
+
+```shell
+docker build -t privoxy:v1 .
+docker run -d --link ssr:ssr -p 8118:8118 privoxy:v1
+```
