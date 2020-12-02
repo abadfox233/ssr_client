@@ -34,5 +34,5 @@ docker pull abadfox/ssr_client:0.1
 ```
 3. start container
 ```shell script
- docker run -d -v /root/config:/config -p 1080:1080 --name="ssr" ssr:0.1
+ docker run -d -v /root/config:/config -p 1080:1080 --name="ssr" abadfox/ssr_client:0.1
 ```
