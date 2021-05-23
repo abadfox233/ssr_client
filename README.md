@@ -49,3 +49,17 @@ CMD ["/usr/sbin/privoxy", "--no-daemon", "/etc/privoxy/config"]
 docker build -t privoxy:v1 .
 docker run -d --link ssr:ssr -p 8118:8118 privoxy:v1
 ```
+
+## Socket Conver To HTTP On ARM
+```Dockerfile
+FROM ufud/rpi-torproxy
+RUN sed -i '$d' /etc/privoxy/config
+RUN echo "forward-socks5t   /   ssr:1080 . " >> /etc/privoxy/config
+EXPOSE 8118
+CMD ["/usr/sbin/privoxy", "--no-daemon", "/etc/privoxy/config"]
+```
+
+```shell
+docker build -t privoxy:v1 .
+docker run -d --link ssr:ssr --name="privoxy" -p 8118:8118 privoxy:v1
+```
